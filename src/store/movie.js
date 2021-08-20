@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _uniqueBy from 'lodash/uniqBy' // 1. lodash Import
 
 export default{
     // trUe를 넣으면 movie.js를 index.js에 modules부분에 명시해서 별개의 부분으로 사용할 수 있다.
@@ -22,16 +23,16 @@ export default{
         }
     },
     actions: {
-        // 1. context를 => {context} 이렇게 객체 구조분해로 작성해주면
         async searchMovies({state, commit}, payload){ 
             const {title, type, number, year} = payload
             const OMDB_API_KEY = '7035c60c'
 
             const res = await axios.get(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${title}&type=${type}&y=${year}$page=1`)
             const { Search, totalResults } = res.data
-            // 2. context.commit 부분을 아래와 같이 바꿔줄 수 있다.
+            // 2. uniqBy 삽입부분
             commit('updateState', {
-                movies: Search
+                // 이렇게 하면 Search 배열에 imdbID 값이 겹치지 않게 지정할 수 있다.
+                movies: _uniqueBy(Search, 'imdbID')
             })
             console.log(totalResults); // 268
             console.log(typeof totalResults) // string
@@ -46,7 +47,9 @@ export default{
                     const res = await axios.get(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${title}&type=${type}&y=${year}$page={page}`)
                     const { Search } = res.data
                     commit('updateState', {
-                        movies: [...state.movies, ...Search]
+                        movies: [...state.movies, 
+                            // 3. 여기 Search 부분도 값이 겹치지 않도록 설정해주자
+                        ..._uniqueBy(Search, 'imdbID')]
                     })
                 }
             }
