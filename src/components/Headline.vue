@@ -22,6 +22,7 @@
         font-family: "Oswald", sans-serif;
         font-size: 80px;
         span{
+            // bootstrap 색 지정 기준.
             color: $primary;
         }
     }
