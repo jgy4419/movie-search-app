@@ -1,5 +1,13 @@
 // Default variable overrides
 $primary: #FDC000;
+// container의 최대 가로 너비를 창의 크기에 맞게 조절해줄 수 있다.
+$container-max-widths: (
+  sm: 540px,
+  md: 704px,
+  lg: 924px,
+  xl: 1140px,
+  xxl: 1364px
+);
 
 
 // Required
