@@ -9,7 +9,8 @@ export default{
         movies: [],
         message: 'Search for the movie title!',
         // actions에 searchMovies가 실행이 되면 검색이 시작되면 true로 바뀌게 설정
-        loading : false
+        loading : false,
+        thrMovie : {}
     }),
     // 계산된 상태(computed)를 만들어 준다.
     getters: {},
@@ -25,7 +26,7 @@ export default{
         }
     },
     actions: {
-        async searchMovies({state, commit}, payload){ 
+        async searchMovies({state, commit}, payload){ // 여러가지 영화 아이템을 가져옴.
             /* 영화의 목록을 가져오는 행위가 끝나지 않았는데 사용자가 enter키를 한번 아니 여러번 눌러서
             searchMovie 부분이 또 동작을 시킬수도 있다. loading에는 true가 되어져 있는 상태이고 그러면 조건에 걸리면서
             return이 실행되면서 함수가 종료되면서 밑에 로직은 동작하지 않게 된다.*/
@@ -88,15 +89,41 @@ export default{
                     loading: false
                 })
             }
+        },
+        async searchMovieWithId({state, commit}, payload){
+            if(state.loadgin) return
+            // fetchMovie함수가 실행되기 전에 searchMovieWuthId 속성이 실행되면  theMovie값 초기화 시키기{ }
+            commit('updateState',{
+                theMovie: {},
+                loading: true
+            })
+            try{
+                const res = await _fetchMovie(payload)
+                console.log(res.data)
+                commit('updateState',{
+                    theMovie: res.data
+                })
+            } catch(error){
+                commit('updateState', {
+                    theMovie: {}
+                })
+            } finally{
+                commit('updateState', {
+                    loading : false
+                })
+            }
         }
     }
 }
 // movie.js에서만 사용된다는 의미로 _를 붙여주자.
 // 실행이 될 때 여러가지 데이터를 받아서 내부에서 처리.
 function _fetchMovie(payload){
-    const{ title, type, year, page } = payload
+    const{ title, type, year, page, id } = payload
     const OMDB_API_KEY = '7035c60c'
-    const url = `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${title}&type=${type}&y=${year}$page=${page}`
+    // 만약에 padload에 객체 구조분해를 통해서 우리가 id값을 추출했는데 그 id 값이 있으면 새로운 url 주소를 정의할 것이다. 만약에 아니면 기존의 url주소 넣기.
+    const url = id 
+    ? `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${id}` 
+    : `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${title}&type=${type}&y=${year}$page=${page}`
     return new Promise((resolve, reject) => { 
         axios.get(url)
         .then((res) => {

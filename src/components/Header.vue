@@ -9,11 +9,12 @@
                 <RouterLink
                 :to="nav.href"
                 active-class="active"
+                :class="{active: isMatch(nav.path)}"
                 class="nav-link">
                     {{ nav.name }}
                 </RouterLink>
             </div>
-        </div>
+        </div>  
     </header>    
 </template>
 <script>
@@ -32,7 +33,8 @@ export default {
                 },
                 {
                     name: 'Movie',
-                    href: '/movie'
+                    href: '/movie/tt4520988',
+                    path: /^\/movie/ // /movie로 시작하는 경로인 경우에 일치하겠다는 정규표현식.
                 },
                 {
                     name: 'About',
@@ -40,6 +42,13 @@ export default {
                 }
             ]
         }
+    },
+    methods: {
+        isMatch(path){
+            if(!path) return false
+            console.log(this.$route)
+            return path.test(this.$route.fullPath)
+        }   
     }
 }
 </script>

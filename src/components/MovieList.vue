@@ -5,11 +5,10 @@
         movies는 영화의 목록을 가지고 있는 데이터이다. 그 데이터의 개수를 선택해서 0이면 목록이 없다는 뜻이고 그러면
         no-result가 출력이 되어야 하니 반대되는 의미인 !를 넣어줬다.-->
         <!--영화 제목이 없는 경우에 true가 돼서 클래스가 출력이 된다.-->
-        <div :class="{'no-result' : !movies.length}" 
-        class="inner">
-            <div 
-            v-if="loading"
-            class="spinner-border text-primary"></div>
+        <div 
+            :class="{'no-result' : !movies.length}" 
+            class="inner">
+            <Loader v-if="loading"/>
             <!--메시지가 표시가 되어져 있을 때는 영화의 목록이 나타나지 않고, 메시지가 없는 경우에만 목록이 나타나도록 지정.-->
             <div 
                 v-if="message"
@@ -31,9 +30,11 @@
 
 <script>
 import MovieItem from '~/components/MovieItem'
+import Loader from '~/components/Loader'
 export default {
     components: {
-        MovieItem
+        MovieItem,
+        Loader
     },
     computed: {
         /* movies()로 이렇게 계산된 데이터로 정의해준다. 이렇게 해주는 이유는 
