@@ -1,8 +1,13 @@
+# 8월 26일 작업
+### 1. about 페이지 만들기
+![image](https://user-images.githubusercontent.com/76980526/130904771-ba6978eb-74ad-4dea-b026-de0d9356fcbc.png)
+### 2. 페이지 url 경로에 주소를 잘 못 입력했을 때 생기는 404에러 페이지 생성.
+![image](https://user-images.githubusercontent.com/76980526/130904838-9bef10ca-58b5-414a-b229-4d07dcee3c3a.png)
 # 8월 24/25일 작업
 ### 영화를 검색하고, 내용을 보고싶은 영화를 클릭하면 상세 설명 페이지가 나오도록 작업.
   ![image](https://user-images.githubusercontent.com/76980526/130718839-91a4da15-6459-44ba-8c09-3d6586bd5613.png)
 #### 상세 정보를 들어가보면 Search에서 Movies로 변경되는 것 까지 볼 수 있다.
-![image](https://user-images.githubusercontent.com/76980526/130718968-87910c23-68a4-426f-a7ce-25fa22229479.png)
+![image](https://user-images.giㅊㅊthubusercontent.com/76980526/130718968-87910c23-68a4-426f-a7ce-25fa22229479.png)
 
 # ~8월23일 작업
 ### 1. 검색된 내용이 없을 때 회색박스 안에 text 출력되도록 설정.

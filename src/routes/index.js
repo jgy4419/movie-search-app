@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from './Home'
 import Movie from './Movie'
 import About from './About'
+import NotFound from './NotFound'
 
 export default createRouter({
     history: createWebHashHistory(),
@@ -19,6 +20,11 @@ export default createRouter({
         {
             path: '/about',
             component: About
+        },
+        {
+            // .*는 우리가 일치시킬 수 있는 모든 것들과 일치시켜주는 정규표현식이다.
+            path: '/:notFound(.*)',
+            component: NotFound
         }
     ]
 })
